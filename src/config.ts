@@ -57,10 +57,10 @@ export const profileConfig: ProfileConfig = {
   links: [
     {
       name: 'Twitter',
-      icon: 'hugeicons:new-twitter',       // Visit https://icones.js.org/ for icon codes
+      icon: 'ant-design:bilibili-filled',       // Visit https://icones.js.org/ for icon codes
                                         // You will need to install the corresponding icon set if it's not already included
                                         // `pnpm add @iconify-json/<icon-set-name>`
-      url: 'https://x.com/kiloxgo',
+      url: 'https://bili2233.cn/YbHRX2e',
     },
     {
       name: 'Steam',
