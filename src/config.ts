@@ -42,6 +42,7 @@ export const navBarConfig: NavBarConfig = {
     LinkPreset.Home,
     LinkPreset.Archive,
     LinkPreset.About,
+    LinkPreset.Gallery, // 添加这一行
     {
       name: 'GitHub',
       url: 'https://github.com/KiloxGo',     // Internal links should not include the base path, as it is automatically added

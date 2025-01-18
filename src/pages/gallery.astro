@@ -1,0 +1,59 @@
+---
+import I18nKey from '../i18n/i18nKey'
+import { i18n } from '../i18n/translation'
+import MainGridLayout from '../layouts/MainGridLayout.astro'
+
+const title = i18n(I18nKey.gallery)
+const images = [
+  { id: 'image1', src: '/src/gallery/image1.jpg', alt: 'Image 1' },
+  { id: 'image2', src: '/src/gallery/image2.jpg', alt: 'Image 2' },
+  { id: 'image3', src: '/src/gallery/image3.jpg', alt: 'Image 3' },
+  { id: 'image3', src: '/src/gallery/image4.jpg', alt: 'Image 4' },
+]
+---
+
+<MainGridLayout title={title}>
+    <style>
+        @import '../styles/main.css';
+    </style>
+    <div class="gallery-container">
+        {images.map(image => (
+            <div class="gallery-item" onclick={`toggleModal('${image.src}')`}>
+                <img src={image.src} alt={image.alt}>
+            </div>
+        ))}
+    </div>
+
+    <div id="modal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+</MainGridLayout>
+
+
+
+<script is:inline>
+    function toggleModal(imageSrc) {
+        const modal = document.getElementById('modal');
+        const modalImg = document.getElementById('modalImage');
+        modal.style.display = "flex";
+        modalImg.src = imageSrc;
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('modal');
+        modal.style.display = "none";
+    }
+
+    document.getElementById('modal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeModal();
+        }
+    });
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeModal();
+        }
+    });
+</script>
