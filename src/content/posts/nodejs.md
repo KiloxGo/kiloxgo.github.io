@@ -1,5 +1,5 @@
 ---
-title: Nodejs&npm安装
+title: Nodejs&npm安装(已改用nvm)
 published: 2025-01-17
 description: 'Nodejs'
 image: ''

@@ -1,15 +1,40 @@
 ---
+import fs from 'node:fs'
+import path from 'node:path'
 import I18nKey from '../i18n/i18nKey'
 import { i18n } from '../i18n/translation'
 import MainGridLayout from '../layouts/MainGridLayout.astro'
+import { generateThumbnail, getThumbnailPath } from '../utils/image-utils'
+
+const imagesDir = path.join(process.cwd(), 'public', 'gallery')
+
+const images = fs
+  .readdirSync(imagesDir)
+  .filter(file =>
+    ['.jpg', '.jpeg', '.png'].includes(path.extname(file).toLowerCase()),
+  )
+  .map(file => {
+    const src = `/gallery/${file}`
+    const thumbPath = getThumbnailPath(src)
+    const thumbSrc = `/gallery/thumb/${path.basename(file, path.extname(file))}_thumb${path.extname(file)}`
+
+    // 如果缩略图不存在则生成
+    if (!fs.existsSync(path.join(process.cwd(), 'public', thumbPath))) {
+      generateThumbnail(
+        path.join(imagesDir, file),
+        path.join(process.cwd(), 'public', thumbPath),
+      )
+    }
+
+    return {
+      id: path.basename(file, path.extname(file)),
+      src,
+      thumb: thumbSrc,
+      alt: `Image ${path.basename(file, path.extname(file))}`,
+    }
+  })
 
 const title = i18n(I18nKey.gallery)
-const images = [
-  { id: 'image1', src: '/gallery/image1.jpg', alt: 'Image 1' },
-  { id: 'image2', src: '/gallery/image2.jpg', alt: 'Image 2' },
-  { id: 'image3', src: '/gallery/image3.jpg', alt: 'Image 3' },
-  { id: 'image3', src: '/gallery/image4.jpg', alt: 'Image 4' },
-]
 ---
 
 <MainGridLayout title={title}>
@@ -18,8 +43,13 @@ const images = [
     </style>
     <div class="gallery-container">
         {images.map(image => (
-            <div class="gallery-item" onclick={`toggleModal('${image.src}')`}>
-                <img src={image.src} alt={image.alt}>
+            <div class="gallery-item" onclick={`loadFullImage('${image.id}', '${image.src}')`}>
+                <img 
+                    src={image.thumb} 
+                    alt={image.alt}
+                    id={`thumb-${image.id}`}
+                    loading="lazy"
+                >
             </div>
         ))}
     </div>
@@ -30,9 +60,18 @@ const images = [
     </div>
 </MainGridLayout>
 
-
-
 <script is:inline>
+    function loadFullImage(id, src) {
+        const thumb = document.getElementById(`thumb-${id}`);
+        const img = new Image();
+        
+        img.src = src;
+        img.onload = function() {
+            thumb.src = src;
+            toggleModal(src);
+        }
+    }
+
     function toggleModal(imageSrc) {
         const modal = document.getElementById('modal');
         const modalImg = document.getElementById('modalImage');

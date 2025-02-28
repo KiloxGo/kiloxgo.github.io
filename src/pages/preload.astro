@@ -1,0 +1,202 @@
+---
+const hasAccepted =
+  typeof window !== 'undefined' && localStorage.getItem('preload-accepted')
+---
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+#shape {
+  position: absolute;
+  left: 0;
+  bottom: -1vw;
+}
+.waves img:not(#shape) {
+  position: absolute;
+  left: 0;
+}
+.waves img:nth-child(1) {
+  opacity: 0.8;
+  bottom: -0.1vw;
+  animation: move-1 5s infinite;
+}
+@keyframes move-1 {
+  50% {
+    transform: translateY(35px);
+  }
+}
+.waves img:nth-child(2) {
+  opacity: 0.7;
+  bottom: 0.5vw;
+  animation: move-2 4s infinite;
+}
+@keyframes move-2 {
+  50% {
+    transform: translateY(25px);
+  }
+}
+.waves img:nth-child(3) {
+  bottom: 0.3vw;
+  opacity: 0.6;
+  animation: move-3 3.5s infinite;
+}
+@keyframes move-3 {
+  50% {
+    transform: translateY(20px);
+  }
+}
+.waves img:nth-child(4) {
+  bottom: 0.1vw;
+  opacity: 0.5;
+  animation: move-4 3s infinite;
+}
+@keyframes move-4 {
+  50% {
+    transform: translateY(20px);
+  }
+}
+
+body,
+html {
+  padding: 0;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  display: block;
+}
+
+.startwaves {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  height: 120vh;
+  width: 100%;
+  background-color: #469ce5;
+  transform: translateY(-10vh);
+  animation-name: down;
+  animation-duration: 3s;
+  animation-delay: 1s;
+  animation-timing-function: ease-out;
+  z-index: 999;
+}
+
+@keyframes down {
+  0% {
+    transform: translateY(-10vh);
+  }
+
+  100% {
+    transform: translateY(110vh);
+  }
+}
+
+.waves {
+  display: block;
+  position: absolute;
+  bottom: 120vh;
+  width: 100%;
+}
+
+#videobg {
+  width: 100%;
+  height: 100%;
+}
+
+.videos {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+}
+
+#centertext {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  animation-name: out;
+  animation-duration: 1.5s;
+  animation-delay: 3s;
+  animation-fill-mode: forwards; 
+}
+
+@keyframes out {
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}
+@keyframes in {
+  100% {
+    opacity: 1;
+  }
+}
+#p3relogo{
+  position: absolute;
+  right: 12%;
+  top: 50%;
+  opacity: 0;
+  transform: translateY(-50%);
+  animation-name: in;
+  animation-duration: 1.5s;
+  animation-delay: 5s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards; 
+}
+  </style>
+</head>
+<body>
+    <div class="startwaves" id="downout">
+        <div class="waves">
+            <img src="/img/waves/wave-1.svg" />
+            <img src="/img/waves/wave-2.svg" />
+            <img src="/img/waves/wave-3.svg" />
+            <img src="/img/waves/wave-4.svg" />
+            <img src="/img/waves/wave-5.svg" id="shape" />
+        </div>
+    </div>
+    <div id="videobg">
+        <video id="video2" class="videos" muted loop>
+            <source src="/assets/movie/fv_movie2.mp4">
+        </video>
+        <video id="video1" class="videos" muted preload="auto">
+            <source src="/assets/movie/fv_movie1.mp4">
+        </video>
+        <div id="centertext">
+            <h1>Memento Mori</h1>
+            <p>Remember, You Will Die.<br />Time never waits.<br />It delivers all equally to the same end.</p>
+        </div>
+        <img id="p3relogo" src="/img/P3RE.svg" alt="" />
+    </div>
+
+    <script is:inline>
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      if (isMobile) {
+        localStorage.setItem('preload-accepted', 'true');
+        window.location.href = '/';
+      } else {
+        var downwave = document.getElementById('downout');
+        
+        downwave.addEventListener('animationend', function() {
+          downwave.style.display = 'none'
+          var video1 = document.getElementById("video1");
+          var video2 = document.getElementById("video2");
+          video1.play();
+          video1.addEventListener('ended', function() {
+            video1.style.display = 'none'
+            video2.play();
+
+            setTimeout(() => {
+              localStorage.setItem('preload-accepted', 'true');
+              window.location.href = '/';
+            }, 1500);
+            
+          });
+        });
+      }
+    </script>
+</body>
+</html>
