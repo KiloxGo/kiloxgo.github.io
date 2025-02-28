@@ -196,6 +196,12 @@ html {
             
           });
         });
+
+        // 添加点一下就能skip的小功能
+        document.body.addEventListener('click', function() {
+          localStorage.setItem('preload-accepted', 'true');
+          window.location.href = '/';
+        });
       }
     </script>
 </body>
