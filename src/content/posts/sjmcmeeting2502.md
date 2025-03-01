@@ -9,6 +9,13 @@ draft: false
 lang: 'zh_CN'
 ---
 
+## 会后反思
+
+1. 尽可能地使用主流版本
+2. 每个人领奖后问问有无感言
+3. 提前私聊提醒获奖人
+4. 有大事前都要关掉几个模组服避免服务器BOOM（痛哭）
+
 ## 1.Ctrl C+V
 部长会给你分配上一次社团大会的服务器和这一次社团大会的实例，这样我们就可以轻松愉快的~~在服务端文件的史山上继续拉屎了~~继承前人的工作而减轻工作量了，将上一次的服务端文件压缩打包下载上传到另一个服务端实例文根目录中<sub>~~会不会有一位愿意为技术部温暖大家庭健康工作50年的小登走过来说：前辈!你的服务端文件有点华丽，我来帮你重构简化一下吧~~</sub>
 
@@ -66,7 +73,24 @@ lang: 'zh_CN'
 增减slide_n.json的数量并修改编号
 
 3. `assets\slide\textures\item\slide_01.png`
-把PPT图片重新命名为slide_n.png丢进这个路径,注意会区分后缀大小写是png不是PNG
+把PPT图片重新命名为slide_n.png丢进这个路径,注意会区分后缀大小写是png不是PNG<br>
+可以使用以下方法批量重命名
+1. 将图片1-9的图片序号改成01，02，03的格式（避免批量重命名顺序错误）
+<div>
+<img src='/clubmeeting/pptrename.png' >
+</div>
+2. 在图片文件夹处打开终端，输入(注意图片扩展名为小写的png)
+
+```
+$i = 1; Get-ChildItem | ForEach { Rename-Item $_ -NewName ("slide_{0:D2}.png" -f $i++) }
+```
+
+##### PPT如何导出成PNG
+
+<div>
+<img src='/clubmeeting/ppttrans1.png' >
+<img src='/clubmeeting/ppttrans2.png' >
+</div>
 
 #### 数据包配置
 
@@ -151,7 +175,7 @@ Down"}','{"text":"=========="}']},back_text:{messages:
 </div>
 <hr>
 
-## 0215计划有变，版本从以往的1.20.1变为1.21.3，开始基础的搭建服务器教程
+## 公元2025年2·15剧变：计划有变，版本从以往的1.20.1变为1.21.3，开始重新搭建服务器
 
 During the painful process,what problems had i solved?
 
@@ -201,32 +225,36 @@ ok搞定，`“やれやれだぜ…”`
 
 ### 颁奖大会Special:添加领奖时的粒子效果
 
-使用指令如下
-
-```
-summon
-```
+使用插件[`EffectMaster点击下载`](https://wwvg.lanzoub.com/ioKXe2p981ja)并配置相关[`yml文件点击下载`](https://wwvg.lanzoub.com/ilbxy2p981hi)
+<br>[EffectMaster Wiki](https://effectmaster.m64.dev/)
+<br>相关效果展示
+<div>
+<img src='/clubmeeting/effect.png' >
+</div>
 
 ## 整合包的配置
 
-1. 整合包可以整个版本游戏打包，应该照顾各种人群考虑周到，至少包含以下：`自带启动器PCL或HMCL`、`JDK`（HMCL中可以填包里的相对路径）、`SJMC皮肤站验证`、`游戏内大会服务器列表`、`资源包`、`默认选中资源包`
+1. 整合包可以整个版本游戏打包，应该照顾各种人群考虑周到，至少包含以下：`自带启动器PCL或HMCL`、`JDK`（可以一起打包）、`SJMC皮肤站验证`、`游戏内大会服务器列表`、`资源包`、`默认选中资源包`
 2. 打包前记得删除自己皮肤站验证的账户
 
 ## 服务端
 
-1. 上传资源包，开启强制启用资源包
+1. 上传资源包，开启强制启用资源包(找部长上传媒体库获取链接)
+<div>
+<img src='/clubmeeting/onresource.png' >
+</div>
 2. 相关的服务器抗压测试
 
 ## 致谢
 - 感谢部长Day酱的指导❤
 - 感谢modist佬在PPT指令方面的指导
-- 感谢stya老师在小游戏方面的指导
+- 感谢stya老师在小游戏方面的指导以及插件支持
 - 感谢Wouffengard在搭建过程中的帮助
 - 感谢XOTaiChi制作的PPT
 - 感谢咖啡协助测试服务器并提出意见<br>
 这个世界对笨蛋的包容度还挺高的XWX,相关文件可以找我索要
 
-## 输入一个6位数字查询我的精神状态
+## 输入一个6位恶臭数字查询我的精神状态
 
 <!DOCTYPE html>
 <html lang="zh-CN">
