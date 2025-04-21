@@ -45,3 +45,10 @@ cat ~/.ssh/id_rsa.pub
 
 ssh-rsa开头，邮箱结尾的一大串<br>
 添加到Github Settings里面即可
+
+# Git 配置
+
+```shell
+git config --global user.name "John Doe"
+git config --global user.email "john@example.com"
+```
